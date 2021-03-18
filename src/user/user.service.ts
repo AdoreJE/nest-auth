@@ -4,6 +4,8 @@ import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import * as bcrypt from 'bcrypt';
+import { bcryptConstant } from "../common/constants";
 
 @Injectable()
 export class UserService {
@@ -21,6 +23,7 @@ export class UserService {
         error: 'Forbidden'
       })
     }
+    createUserDto.password = await bcrypt.hash(createUserDto.password, bcryptConstant.saltOrRounds);
     const { password, ...result } = await this.userRepository.save(createUserDto);
     return result;
   }
@@ -46,6 +49,7 @@ export class UserService {
         error: 'Forbidden'
       })
     }
+    updateUserDto.password = await bcrypt.hash(updateUserDto.password, bcryptConstant.saltOrRounds);
     await this.userRepository.update(id, updateUserDto);
   }
 }
