@@ -13,8 +13,8 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userRepository.findOne({username: username});
+  async validateUser(userId: string, password: string): Promise<any> {
+    const user = await this.userRepository.findOne({userId: userId});
 
     if (!user) {
       throw new ForbiddenException({
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+    const payload = { userId: user.userId, userName: user.userName, seq: user.seq };
     return {
       access_token: this.jwtService.sign(payload)
     }

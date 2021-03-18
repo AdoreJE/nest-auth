@@ -15,7 +15,7 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<any> {
-    const isExist = await this.userRepository.findOne({username: createUserDto.username});
+    const isExist = await this.userRepository.findOne({userId: createUserDto.userId});
     if (isExist) {
       throw new ForbiddenException({
         statusCode: HttpStatus.FORBIDDEN,
@@ -29,11 +29,15 @@ export class UserService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      select: ["seq", "userId", "userName"],
+    });
   }
 
   findOne(id: string): Promise<User> {
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOne(id, {
+      select: ["seq", "userId", "userName"],
+    });
   }
 
   async remove(id: string): Promise<void> {
