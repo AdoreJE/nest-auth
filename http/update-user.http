@@ -1,7 +1,7 @@
-PUT http://localhost:3000/user/4
+PUT http://localhost:3000/user/3
 Content-Type: application/json
 
 {
-  "username": "홍길동",
-  "password": "dkanrjsk"
+  "userId": "thkim",
+  "userName": "김태형"
 }

@@ -35,7 +35,7 @@ export class UserService {
   }
 
   findOne(id: string): Promise<User> {
-    return this.userRepository.findOne(id, {
+    return this.userRepository.findOne({userId: id}, {
       select: ["seq", "userId", "userName"],
     });
   }
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<void> {
-    const isExist = await this.userRepository.findOne(id);
+    const isExist = await this.userRepository.findOne({userId: id});
     if (!isExist) {
       throw new ForbiddenException({
         statusCode: HttpStatus.FORBIDDEN,
@@ -53,7 +53,9 @@ export class UserService {
         error: 'Forbidden'
       })
     }
-    updateUserDto.password = await bcrypt.hash(updateUserDto.password, bcryptConstant.saltOrRounds);
+    if (updateUserDto.password !== undefined) {
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, bcryptConstant.saltOrRounds);
+    }
     await this.userRepository.update(id, updateUserDto);
   }
 }
