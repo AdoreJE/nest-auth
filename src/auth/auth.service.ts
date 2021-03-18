@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 import { User } from "../user/entities/user.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { LoginUserDto } from "../user/dto/login-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -13,8 +14,8 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async validateUser(userId: string, password: string): Promise<any> {
-    const user = await this.userRepository.findOne({userId: userId});
+  async validateUser(loginUserDto: LoginUserDto): Promise<any> {
+    const user = await this.userRepository.findOne({userId: loginUserDto.userId});
 
     if (!user) {
       throw new ForbiddenException({
@@ -24,7 +25,7 @@ export class AuthService {
       })
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(loginUserDto.password, user.password);
 
     if (isMatch) {
       const { password, ...result } = user;
