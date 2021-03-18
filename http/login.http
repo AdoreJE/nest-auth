@@ -2,6 +2,11 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "username":"john",
-  "password":"changeme"
+  "username": "john",
+  "password": "changeme"
 }
+
+> {%
+ client.global.set("access_token", "Bearer " + response.body.access_token);
+ client.log("access_token: " + client.global.get("access_token"));
+ %}
