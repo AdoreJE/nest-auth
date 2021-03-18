@@ -2,8 +2,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "username": "john",
-  "password": "changeme"
+  "username": "홍길동",
+  "password": "dkanrjsk"
 }
 
 > {%

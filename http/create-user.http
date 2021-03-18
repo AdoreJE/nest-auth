@@ -2,6 +2,6 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-  "username": "강태형",
+  "username": "username",
   "password": "dkanrjsk"
 }
