@@ -2,11 +2,25 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "password": "1"
+  "userId": "admin",
+  "password": "admin"
 }
 
 > {%
- client.global.set("access_token", "Bearer " + response.body.access_token);
- client.log("access_token: " + client.global.get("access_token"));
+ client.global.set("accessTokenAdmin", "Bearer " + response.body.accessToken);
+ client.log("accessTokenAdmin: " + client.global.get("accessTokenAdmin"));
+ %}
+
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "userId": "user",
+  "password": "user"
+}
+
+> {%
+ client.global.set("accessTokenUser", "Bearer " + response.body.accessToken);
+ client.log("accessTokenUser: " + client.global.get("accessTokenUser"));
  %}

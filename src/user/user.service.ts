@@ -30,13 +30,13 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.userRepository.find({
-      select: ["seq", "userId", "userName"],
+      select: ["seq", "userId", "userName", "role"],
     });
   }
 
   findOne(id: string): Promise<User> {
     return this.userRepository.findOne({userId: id}, {
-      select: ["seq", "userId", "userName"],
+      select: ["seq", "userId", "userName", "role"],
     });
   }
 

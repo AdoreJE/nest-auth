@@ -1,1 +1,6 @@
-GET http://localhost:3000/user/thkim
+GET http://localhost:3000/user/
+Authorization: {{accessTokenAdmin}}
+
+###
+GET http://localhost:3000/user/user
+Authorization: {{accessTokenUser}}
