@@ -6,15 +6,19 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import * as bcrypt from 'bcrypt';
 import { bcryptConstant } from "../common/constants";
+import { response } from "express";
+import { Student } from "./entities/student.entity";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Student)
+    private studentRepository: Repository<Student>
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<any> {
+  async create(createUserDto): Promise<any> {
     const isExist = await this.userRepository.findOne({userId: createUserDto.userId});
     if (isExist) {
       throw new ForbiddenException({
@@ -25,6 +29,9 @@ export class UserService {
     }
     createUserDto.password = await bcrypt.hash(createUserDto.password, bcryptConstant.saltOrRounds);
     const { password, ...result } = await this.userRepository.save(createUserDto);
+    if (createUserDto.studentId !== undefined) {
+      await this.studentRepository.save(createUserDto);
+    }
     return result;
   }
 

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import { Student } from "./student.entity";
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
   @Column()
   role: string;
+
+  @OneToOne(type => Student, student => student.userId)
+  studentInfo: Student
 }

@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNotIn, IsString } from "class-validator";
 
 export class CreateUserDto {
   @IsString()
@@ -11,5 +11,6 @@ export class CreateUserDto {
   password: string;
 
   @IsString()
-  role: string;
+  @IsNotIn(["admin, teacher"])
+  role: string = "user";
 }

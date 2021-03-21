@@ -9,6 +9,7 @@ import { jwtConstants } from "../common/constants";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "../user/entities/user.entity";
+import { Student } from "../user/entities/student.entity";
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { User } from "../user/entities/user.entity";
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
-    TypeOrmModule.forFeature([User])],
+    TypeOrmModule.forFeature([User, Student])],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
 })

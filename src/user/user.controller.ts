@@ -1,11 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "./entities/user.entity";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { Role } from "../auth/roles.decorator";
-import { RolesGuard } from "../auth/guards/roles.guard";
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { CreateStudentDto } from "./dto/create-student.dto";
+import { CreateTeacherDto } from "./dto/create-teacher.dto";
 
 @Controller('user')
 export class UserController {
@@ -14,6 +13,16 @@ export class UserController {
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<any> {
     return this.userService.create(createUserDto);
+  }
+
+  @Post('student')
+  createStudent(@Body() createStudentDto: CreateStudentDto): Promise<any> {
+    return this.userService.create(createStudentDto);
+  }
+
+  @Post('teacher')
+  createTeacher(@Body() createTeacherDto: CreateTeacherDto): Promise<any> {
+    return this.userService.create(createTeacherDto);
   }
 
   @Get()

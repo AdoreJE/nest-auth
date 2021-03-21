@@ -3,8 +3,33 @@ Content-Type: application/json
 #Authorization: {{access_token}}
 
 {
-  "userId": "user",
-  "userName": "사용자",
-  "password": "user",
+  "userId": "admin",
+  "userName": "관리자",
+  "password": "admin",
   "role": "user"
+}
+
+###
+POST http://localhost:3000/user/student
+Content-Type: application/json
+#Authorization: {{access_token}}
+
+{
+  "userId": "student3",
+  "userName": "학생3",
+  "password": "student3",
+  "studentId": 3,
+  "grade": 3,
+  "class": 3
+}
+
+###
+POST http://localhost:3000/user/teacher
+Content-Type: application/json
+#Authorization: {{access_token}}
+
+{
+  "userId": "teacher2",
+  "userName": "선생님2",
+  "password": "teacher2"
 }
